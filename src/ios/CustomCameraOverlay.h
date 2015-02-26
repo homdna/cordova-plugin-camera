@@ -16,5 +16,6 @@
 + (instancetype) createFromPictureOptions:(CDVPictureOptions*)options;
 + (instancetype) createFromPictureOptions:(CDVPictureOptions*)pictureOptions refToPlugin:(CDVCamera*)pluginRef;
 @property (strong) CDVCamera* plugin;
+@property (strong) UIImage* triggerButtonImage;
 
 @end

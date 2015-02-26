@@ -158,7 +158,7 @@ static NSString* toBase64(NSData* data) {
             [[weakSelf pickerController] setPickerPopoverController:nil];
         }
         
-        CustomCameraOverlay* cameraPicker = [CustomCameraOverlay createFromPictureOptions:pictureOptions refToPlugin:self];
+        CDVCameraPicker* cameraPicker = [CDVCameraPicker createFromPictureOptions:pictureOptions];
         weakSelf.pickerController = (CDVCameraPicker*)cameraPicker;
         
         // Note: weakSelf = CDVCamera. Any object that is set to .delegate must have the
@@ -190,6 +190,7 @@ static NSString* toBase64(NSData* data) {
     self.inMultiplePicturesMode = YES;
     self.hasPendingOperation = YES;
     
+    // Start preloading the images
     __weak CDVCamera* weakSelf = self;
     
     [self.commandDelegate runInBackground:^{
