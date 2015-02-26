@@ -68,7 +68,6 @@
 - (UIButton *) triggerButton
 {
     CGRect fullScreen = self.view.bounds;
-    float screenHeight = CGRectGetMaxY(fullScreen);
     float screenWidth = CGRectGetMaxX(fullScreen);
     float buttonWidth = 80;
     float buttonHeight = 60;
@@ -83,6 +82,23 @@
 
 - (IBAction) triggerAction:(id)sender {
     [self takePicture];
+    CGRect fullScreen = self.view.bounds;
+    UIView* whiteFlashScreen = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [whiteFlashScreen setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:whiteFlashScreen];
+    [UIView animateWithDuration:0.4
+                          delay:0
+                        options: UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         whiteFlashScreen.alpha = 0;
+                     }
+                     completion:^(BOOL finished){
+                         // Once the animation is done, remove flash view from the parent view controller
+                         if (finished) {
+                             [whiteFlashScreen performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+                         }
+                     }];
+
 }
 
 
