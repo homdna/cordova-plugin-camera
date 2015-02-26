@@ -38,9 +38,6 @@
         NSArray* mediaArray = @[(NSString*)(pictureOptions.mediaType == MediaTypeVideo ? kUTTypeMovie : kUTTypeImage)];
         newOverlay.mediaTypes = mediaArray;
     }
-    // Set the frames to be full screen
-    //CGRect screenFrame = [[UIScreen mainScreen] bounds];
-    //newOverlay.view.frame = screenFrame;
     
     newOverlay.showsCameraControls = NO;
     newOverlay.cameraOverlayView = [newOverlay getOverlayView];
@@ -74,10 +71,6 @@
     [_triggerButton setTitle: @"Take Photo" forState: UIControlStateNormal];
     [_triggerButton setTitleColor: [UIColor blueColor] forState: UIControlStateNormal];
     
-    // Images take too long to appear on screen. Need to find a way to preload them.
-    //[_triggerButton setImage:[UIImage imageNamed:@"trigger"] forState:UIControlStateNormal];
-    //[_triggerButton setImage:[UIImage imageNamed:@"trigger"] forState:UIControlStateSelected];
-    
     [_triggerButton setFrame:(CGRect){ 10, 80, 100, 30 }];
     [_triggerButton addTarget:self action:@selector(triggerAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -94,8 +87,6 @@
     UIButton* _closeButton = _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [_closeButton setBackgroundColor:[UIColor whiteColor]];
-    //[_closeButton setImage:[[UIImage imageNamed:@"close"] tintImageWithColor:self.tintColor] forState:UIControlStateNormal];
-    //[_closeButton setFrame:(CGRect){ 25,  CGRectGetMidY(self.bottomContainerBar.bounds) - 15, 30, 30 }];
     [_closeButton setFrame:(CGRect){ 10, 200, 100, 30 }];
     [_closeButton setTitle: @"Done" forState: UIControlStateNormal];
     [_closeButton setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];

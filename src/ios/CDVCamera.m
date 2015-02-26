@@ -133,7 +133,7 @@ static NSString* toBase64(NSData* data) {
 - (void)takePicture:(CDVInvokedUrlCommand*)command
 {
     self.hasPendingOperation = YES;
-    
+    self.inMultiplePicturesMode = NO;
     __weak CDVCamera* weakSelf = self;
 
     [self.commandDelegate runInBackground:^{
@@ -158,7 +158,6 @@ static NSString* toBase64(NSData* data) {
             [[weakSelf pickerController] setPickerPopoverController:nil];
         }
         
-        //CDVCameraPicker* cameraPicker = [CDVCameraPicker createFromPictureOptions:pictureOptions];
         CustomCameraOverlay* cameraPicker = [CustomCameraOverlay createFromPictureOptions:pictureOptions refToPlugin:self];
         weakSelf.pickerController = (CDVCameraPicker*)cameraPicker;
         
@@ -231,14 +230,10 @@ static NSString* toBase64(NSData* data) {
             }
             [weakSelf displayPopover:pictureOptions.popoverOptions];
             weakSelf.hasPendingOperation = NO;
-            //multiplePicturesCache = nil;
-            //self.inMultiplePicturesMode = NO;
             
         } else {
             [weakSelf.viewController presentViewController:cameraPicker animated:YES completion:^{
                 weakSelf.hasPendingOperation = NO;
-                //multiplePicturesCache = nil;
-                //self.inMultiplePicturesMode = NO;
             }];
         }
     }];
