@@ -11,10 +11,6 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-
-static UIImage* triggerButtonImage;
-
-
 @implementation CustomCameraOverlay
 
 @synthesize plugin;
