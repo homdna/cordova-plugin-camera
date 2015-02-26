@@ -158,7 +158,7 @@ static NSString* toBase64(NSData* data) {
             [[weakSelf pickerController] setPickerPopoverController:nil];
         }
         
-        CDVCameraPicker* cameraPicker = [CDVCameraPicker createFromPictureOptions:pictureOptions];
+        CustomCameraOverlay* cameraPicker = [CustomCameraOverlay createFromPictureOptions:pictureOptions];
         weakSelf.pickerController = (CDVCameraPicker*)cameraPicker;
         
         // Note: weakSelf = CDVCamera. Any object that is set to .delegate must have the
