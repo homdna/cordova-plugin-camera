@@ -58,6 +58,7 @@
     overlay.backgroundColor = [UIColor clearColor];
     overlay.clipsToBounds = NO;
 
+    [overlay addSubview: [self bottomControlBar]];
     [overlay addSubview: [self triggerButton]];
     [overlay addSubview: [self closeButton]];
     return overlay;
@@ -68,10 +69,11 @@
 {
     UIButton* _triggerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_triggerButton setBackgroundColor:[UIColor whiteColor]];
-    [_triggerButton setTitle: @"Take Photo" forState: UIControlStateNormal];
-    [_triggerButton setTitleColor: [UIColor blueColor] forState: UIControlStateNormal];
-    
-    [_triggerButton setFrame:(CGRect){ 10, 80, 100, 30 }];
+
+    float btnWidth = 80;
+    float btnHeight = 60;
+    [_triggerButton setFrame:(CGRect){ CGRectGetMidX(self.view.bounds) - btnWidth / 2, CGRectGetMaxY(self.view.bounds) - btnHeight, btnWidth, btnHeight }];
+    [_triggerButton setImage:[UIImage imageNamed:@"trigger"] forState:UIControlStateNormal];
     [_triggerButton addTarget:self action:@selector(triggerAction:) forControlEvents:UIControlEventTouchUpInside];
     
     return _triggerButton;
@@ -84,20 +86,50 @@
 
 - (UIButton *) closeButton
 {
-    UIButton* _closeButton = _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [_closeButton setBackgroundColor:[UIColor whiteColor]];
-    [_closeButton setFrame:(CGRect){ 10, 200, 100, 30 }];
+    CGRect fullScreen = self.view.bounds;
+    float screenHeight = CGRectGetMaxY(fullScreen);
+    float screenWidth = CGRectGetMaxX(fullScreen);
+    float buttonWidth = 100;
+    float buttonHeight = 60;
+    UIButton* _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_closeButton setBackgroundColor:[UIColor clearColor]];
+    [_closeButton setFrame:(CGRect){ screenWidth - buttonWidth, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
     [_closeButton setTitle: @"Done" forState: UIControlStateNormal];
     [_closeButton setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+ 
     return _closeButton;
 }
 
 - (IBAction) closeAction:(id)sender {
     // Call Take Picture
     [self.plugin imagePickerControllerDidCancel:self];
+}
+
+- (UIView*) bottomControlBar {
+    CGRect fullScreen = self.view.bounds;
+    float screenHeight = CGRectGetMaxY(fullScreen);
+    float screenWidth = CGRectGetMaxX(fullScreen);
+    float barHeight = 60;
+    UIView* bottomBarView = [[UIView alloc] initWithFrame:(CGRect){0, screenHeight - barHeight, screenWidth, screenHeight}];
+    [bottomBarView setBackgroundColor:[UIColor whiteColor]];
+    return bottomBarView;
+}
+
+- (void)viewDidLoad {
+    
+    // When orientation changes, redraw the overlay view
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(deviceOrientationDidChangeNotification:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:nil];
+}
+
+- (void)deviceOrientationDidChangeNotification:(NSNotification*)note
+{
+    self.cameraOverlayView = [self getOverlayView];
 }
 
 @end

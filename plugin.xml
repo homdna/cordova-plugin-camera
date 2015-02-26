@@ -22,7 +22,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     id="org.homdna.cordova.camera"
-    version="0.3.5-homdna-1">
+    version="0.3.5-homdna-2">
     <name>Camera</name>
     <description>Cordova Camera Plugin</description>
     <license>Apache 2.0</license>
@@ -142,6 +142,7 @@
          <header-file src="src/ios/CDVJpegHeaderWriter.h" />
          <source-file src="src/ios/CDVJpegHeaderWriter.m" />
          <header-file src="src/ios/CDVExif.h" />
+         <resource-file src='src/ios/CustomCameraOverlay.xcassets'/>
          <framework src="ImageIO.framework" weak="true" />
          <framework src="CoreLocation.framework" />
          <framework src="CoreGraphics.framework" />
