@@ -58,7 +58,7 @@
     overlay.backgroundColor = [UIColor clearColor];
     overlay.clipsToBounds = NO;
 
-    [overlay addSubview: [self bottomControlBar]];
+    [overlay addSubview: [self cameraControlBar]];
     [overlay addSubview: [self triggerButton]];
     [overlay addSubview: [self closeButton]];
     return overlay;
@@ -67,12 +67,14 @@
 
 - (UIButton *) triggerButton
 {
+    CGRect fullScreen = self.view.bounds;
+    float screenHeight = CGRectGetMaxY(fullScreen);
+    float screenWidth = CGRectGetMaxX(fullScreen);
+    float buttonWidth = 80;
+    float buttonHeight = 60;
     UIButton* _triggerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_triggerButton setBackgroundColor:[UIColor whiteColor]];
-
-    float btnWidth = 80;
-    float btnHeight = 60;
-    [_triggerButton setFrame:(CGRect){ CGRectGetMidX(self.view.bounds) - btnWidth / 2, CGRectGetMaxY(self.view.bounds) - btnHeight, btnWidth, btnHeight }];
+    [_triggerButton setFrame:(CGRect){ screenWidth - buttonWidth, CGRectGetMidY(fullScreen) - buttonHeight / 2, buttonWidth, buttonHeight }];
     [_triggerButton setImage:[UIImage imageNamed:@"trigger"] forState:UIControlStateNormal];
     [_triggerButton addTarget:self action:@selector(triggerAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -89,7 +91,7 @@
     CGRect fullScreen = self.view.bounds;
     float screenHeight = CGRectGetMaxY(fullScreen);
     float screenWidth = CGRectGetMaxX(fullScreen);
-    float buttonWidth = 100;
+    float buttonWidth = 80;
     float buttonHeight = 60;
     UIButton* _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_closeButton setBackgroundColor:[UIColor clearColor]];
@@ -106,14 +108,14 @@
     [self.plugin imagePickerControllerDidCancel:self];
 }
 
-- (UIView*) bottomControlBar {
+- (UIView*) cameraControlBar {
     CGRect fullScreen = self.view.bounds;
     float screenHeight = CGRectGetMaxY(fullScreen);
     float screenWidth = CGRectGetMaxX(fullScreen);
-    float barHeight = 60;
-    UIView* bottomBarView = [[UIView alloc] initWithFrame:(CGRect){0, screenHeight - barHeight, screenWidth, screenHeight}];
-    [bottomBarView setBackgroundColor:[UIColor whiteColor]];
-    return bottomBarView;
+    float barWidth = 80;
+    UIView* controlBarView = [[UIView alloc] initWithFrame:(CGRect){screenWidth - barWidth, 0, barWidth, screenHeight}];
+    [controlBarView setBackgroundColor:[UIColor whiteColor]];
+    return controlBarView;
 }
 
 - (void)viewDidLoad {
