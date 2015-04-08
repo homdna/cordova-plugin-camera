@@ -61,9 +61,32 @@
     [overlay addSubview: [self cameraControlBar]];
     [overlay addSubview: [self triggerButton]];
     [overlay addSubview: [self closeButton]];
+    [overlay addSubview: [self toggleCameraButton]];
     return overlay;
 }
 
+- (UIButton *) toggleCameraButton
+{
+    CGRect fullScreen = self.view.bounds;
+    float screenWidth = CGRectGetMaxX(fullScreen);
+    float buttonWidth = 80;
+    float buttonHeight = 60;
+    UIButton* _toggleCameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_toggleCameraButton setBackgroundColor:[UIColor whiteColor]];
+    [_toggleCameraButton setFrame:(CGRect){ screenWidth - buttonWidth, 0, buttonWidth, buttonHeight }];
+    [_toggleCameraButton setImage:[UIImage imageNamed:@"flip"] forState:UIControlStateNormal];
+    [_toggleCameraButton addTarget:self action:@selector(toggleCameraAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return _toggleCameraButton;
+}
+
+- (IBAction) toggleCameraAction:(id)sender {
+    if (self.cameraDevice == UIImagePickerControllerCameraDeviceRear) {
+        self.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    } else {
+        self.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    }
+}
 
 - (UIButton *) triggerButton
 {
@@ -82,7 +105,6 @@
 
 - (IBAction) triggerAction:(id)sender {
     [self takePicture];
-    CGRect fullScreen = self.view.bounds;
     UIView* whiteFlashScreen = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [whiteFlashScreen setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:whiteFlashScreen];
