@@ -57,7 +57,6 @@
     UIView *overlay = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     overlay.backgroundColor = [UIColor clearColor];
     overlay.clipsToBounds = NO;
-
     [overlay addSubview: [self cameraControlBar]];
     [overlay addSubview: [self triggerButton]];
     [overlay addSubview: [self closeButton]];
@@ -70,7 +69,7 @@
     CGRect fullScreen = self.view.bounds;
     float screenWidth = CGRectGetMaxX(fullScreen);
     float buttonWidth = 80;
-    float buttonHeight = 60;
+    float buttonHeight = 120;
     UIButton* _toggleCameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_toggleCameraButton setBackgroundColor:[UIColor whiteColor]];
     [_toggleCameraButton setFrame:(CGRect){ screenWidth - buttonWidth, 0, buttonWidth, buttonHeight }];
@@ -120,7 +119,6 @@
                              [whiteFlashScreen performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
                          }
                      }];
-
 }
 
 
@@ -130,14 +128,13 @@
     float screenHeight = CGRectGetMaxY(fullScreen);
     float screenWidth = CGRectGetMaxX(fullScreen);
     float buttonWidth = 80;
-    float buttonHeight = 60;
+    float buttonHeight = 120;
     UIButton* _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_closeButton setBackgroundColor:[UIColor clearColor]];
     [_closeButton setFrame:(CGRect){ screenWidth - buttonWidth, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
     [_closeButton setTitle: @"Done" forState: UIControlStateNormal];
     [_closeButton setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
- 
     return _closeButton;
 }
 
