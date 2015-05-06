@@ -82,8 +82,10 @@
 - (IBAction) toggleCameraAction:(id)sender {
     if (self.cameraDevice == UIImagePickerControllerCameraDeviceRear) {
         self.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+        self.cameraViewTransform = CGAffineTransformMakeScale(-1.0,1.0);
     } else {
         self.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+        self.cameraViewTransform = CGAffineTransformIdentity;
     }
 }
 
