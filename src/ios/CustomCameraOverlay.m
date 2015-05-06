@@ -106,21 +106,24 @@
 
 - (IBAction) triggerAction:(id)sender {
     [self takePicture];
-    UIView* whiteFlashScreen = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [whiteFlashScreen setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:whiteFlashScreen];
-    [UIView animateWithDuration:0.4
-                          delay:0
-                        options: UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         whiteFlashScreen.alpha = 0;
-                     }
-                     completion:^(BOOL finished){
-                         // Once the animation is done, remove flash view from the parent view controller
-                         if (finished) {
-                             [whiteFlashScreen performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_MSEC * 150);
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void){
+        UIView* whiteFlashScreen = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        [whiteFlashScreen setBackgroundColor:[UIColor whiteColor]];
+        [self.view addSubview:whiteFlashScreen];
+        [UIView animateWithDuration:0.8
+                              delay:0
+                            options: UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             whiteFlashScreen.alpha = 0;
                          }
-                     }];
+                         completion:^(BOOL finished){
+                             // Once the animation is done, remove flash view from the parent view controller
+                             if (finished) {
+                                 [whiteFlashScreen performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+                             }
+                         }];
+    });
 }
 
 
