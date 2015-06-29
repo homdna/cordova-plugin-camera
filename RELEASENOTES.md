@@ -175,3 +175,50 @@
 * CB-8559 Integrate TravisCI
 * CB-8438 cordova-plugin-camera documentation translation: cordova-plugin-camera
 * CB-8538 Added package.json file
+
+### 1.0.0 (Apr 15, 2015)
+* CB-8780 - Display popover using main thread. Fixes popover slowness (closes #81)
+* CB-8746 bumped version of file dependency
+* CB-8746 gave plugin major version bump
+* CB-8707 refactoring windows code to improve readability
+* CB-8706 use filePicker if saveToPhotoAlbum is true
+* CB-8706 remove unnecessary capabilities from xml
+* CB-8747 updated dependency, added peer dependency
+* CB-8683 updated blackberry specific references of org.apache.cordova.camera to cordova-plugin-camera
+* CB-8782: Updated the docs to talk about the allowEdit quirks, it's not 100% working, but better than it was
+* CB-8782: Fixed the flow so that we save the cropped image and use it, not the original non-cropped.  Crop only supports G+ Photos Crop, other crops may not work, depending on the OEM
+* CB-8740: Removing FileHelper call that was failing on Samsung Galaxy S3, now that we have a real path, we only need to update the MediaStore, not pull from it in this case
+* CB-8740: Partial fix for Save Image to Gallery error found in MobileSpec
+* CB-8683 changed plugin-id to pacakge-name
+* CB-8653 properly updated translated docs to use new id
+* CB-8653 updated translated docs to use new id
+* CB-8351 Fix custom implementation of integerValueForKey (close #79)
+* Fix cordova-paramedic path change, build with TRAVIS_BUILD_DIR, use npm to install paramedic
+* docs: added 'Windows' to supported platforms
+* CB-8653 Updated Readme
+* CB-8659: ios: 4.0.x Compatibility: Remove use of deprecated headers
+
+### 1.1.0 (May 06, 2015)
+* CB-8943 fix `PickAndContinue` issue on *Win10Phone*
+* CB-8253 Fix potential unreleased resources
+* CB-8909: Remove unused import from File
+* CB-8404 typo fix `cameraproxy.js`
+* CB-8404 Rotate camera feed with device orientation
+* CB-8054 Support taking pictures from file for *WP8*
+* CB-8405 Use `z-index` instead of `z-order`
+
+### 1.2.0 (Jun 17, 2015)
+* Closing stale pull request: close #84
+* Closing stale pull request: close #66
+* CB-9128 cordova-plugin-camera documentation translation: cordova-plugin-camera
+* Update docs. This closes #100
+* attempt to fix npm markdown issue
+* CB-8883 fix picture rotation issue
+* one more alias
+* Fixed some nit white-space issues, aliased a little more
+* major refactor : readability
+* Patch for CB-8498, this closes #64
+* CB-8879 fix stripe issue with correct aspect ratio
+* CB-8601 - iOS camera unit tests broken
+* CB-7667 iOS8: Handle case where camera is not authorized (closes #49)
+* add missing license header
