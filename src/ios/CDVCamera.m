@@ -172,8 +172,8 @@ static NSString* toBase64(NSData* data) {
             }
         }
         
-        CustomCameraOverlay* cameraPicker = [CustomCameraOverlay createFromPictureOptions:pictureOptions];
-        weakSelf.pickerController = (CDVCameraPicker*)cameraPicker;
+        CDVCameraPicker* cameraPicker = [CDVCameraPicker createFromPictureOptions:pictureOptions];
+        weakSelf.pickerController = cameraPicker;
         
         // Note: weakSelf = CDVCamera. Any object that is set to .delegate must have the
         // didFinishPickingImage delegate(aka callback) defined
