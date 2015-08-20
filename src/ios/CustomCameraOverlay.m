@@ -61,6 +61,8 @@
     [overlay addSubview: [self triggerButton]];
     [overlay addSubview: [self closeButton]];
     [overlay addSubview: [self toggleCameraButton]];
+    [overlay addSubview: [self flashButton]];
+    [overlay addSubview: [self photoLibraryButton]];
     return overlay;
 }
 
@@ -69,9 +71,9 @@
     CGRect fullScreen = self.view.bounds;
     float screenWidth = CGRectGetMaxX(fullScreen);
     float buttonWidth = 80;
-    float buttonHeight = 120;
+    float buttonHeight = 60;
     UIButton* _toggleCameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_toggleCameraButton setBackgroundColor:[UIColor whiteColor]];
+    [_toggleCameraButton setBackgroundColor:[UIColor clearColor]];
     [_toggleCameraButton setFrame:(CGRect){ screenWidth - buttonWidth, 0, buttonWidth, buttonHeight }];
     [_toggleCameraButton setImage:[UIImage imageNamed:@"flip"] forState:UIControlStateNormal];
     [_toggleCameraButton addTarget:self action:@selector(toggleCameraAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -89,15 +91,59 @@
     }
 }
 
+- (UIButton *) flashButton
+{
+    float buttonWidth = 80;
+    float buttonHeight = 60;
+    UIButton* _flashButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_flashButton setBackgroundColor:[UIColor clearColor]];
+    [_flashButton setFrame:(CGRect){ 0, 0, buttonWidth, buttonHeight }];
+    [_flashButton setImage:[UIImage imageNamed:@"flash"] forState:UIControlStateNormal];
+    [_flashButton addTarget:self action:@selector(flashAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return _flashButton;
+}
+
+- (IBAction) flashAction:(id)sender {
+   if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeOff) {
+      self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOn;
+   } else {
+      self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+   }
+}
+
+- (UIButton *) photoLibraryButton
+{
+   CGRect fullScreen = self.view.bounds;
+   float screenHeight = CGRectGetMaxY(fullScreen);
+   float buttonWidth = 44;
+   float buttonHeight = 60;
+   UIButton* _photoLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+   [_photoLibraryButton setBackgroundColor:RGBColor(0xffffff, .1)];
+   [_photoLibraryButton.layer setCornerRadius:4];
+   [_photoLibraryButton.layer setBorderWidth:1];
+   [_photoLibraryButton.layer setBorderColor:RGBColor(0xffffff, .3).CGColor];
+   [_photoLibraryButton setFrame:(CGRect){ 0, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
+   [_photoLibraryButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+   [_photoLibraryButton addTarget:self action:@selector(libraryAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    return _photoLibraryButton;
+}
+
+- (void) libraryAction:(UIButton *)button
+{
+   [self openLibrary];
+}
+
 - (UIButton *) triggerButton
 {
     CGRect fullScreen = self.view.bounds;
-    float screenWidth = CGRectGetMaxX(fullScreen);
+    float screenHeight = CGRectGetMaxY(fullScreen);
     float buttonWidth = 80;
-    float buttonHeight = 60;
+    float buttonHeight = 80;
     UIButton* _triggerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_triggerButton setBackgroundColor:[UIColor whiteColor]];
-    [_triggerButton setFrame:(CGRect){ screenWidth - buttonWidth, CGRectGetMidY(fullScreen) - buttonHeight / 2, buttonWidth, buttonHeight }];
+    [_triggerButton setFrame:(CGRect){CGRectGetMidX(fullScreen) - buttonWidth / 2, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
     [_triggerButton setImage:[UIImage imageNamed:@"trigger"] forState:UIControlStateNormal];
     [_triggerButton addTarget:self action:@selector(triggerAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -133,7 +179,7 @@
     float screenHeight = CGRectGetMaxY(fullScreen);
     float screenWidth = CGRectGetMaxX(fullScreen);
     float buttonWidth = 80;
-    float buttonHeight = 120;
+    float buttonHeight = 80;
     UIButton* _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_closeButton setBackgroundColor:[UIColor clearColor]];
     [_closeButton setFrame:(CGRect){ screenWidth - buttonWidth, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
@@ -153,7 +199,7 @@
     float screenHeight = CGRectGetMaxY(fullScreen);
     float screenWidth = CGRectGetMaxX(fullScreen);
     float barWidth = 80;
-    UIView* controlBarView = [[UIView alloc] initWithFrame:(CGRect){screenWidth - barWidth, 0, barWidth, screenHeight}];
+    UIView* controlBarView = [[UIView alloc] initWithFrame:(CGRect){0, screenHeight - barWidth, screenWidth, barWidth}];
     [controlBarView setBackgroundColor:[UIColor whiteColor]];
     return controlBarView;
 }
