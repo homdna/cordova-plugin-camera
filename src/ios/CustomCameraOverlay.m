@@ -78,7 +78,6 @@
     [overlay addSubview: [self closeButton]];
     [overlay addSubview: [self toggleCameraButton]];
     [overlay addSubview: [self flashButton]];
-    [overlay addSubview: [self photoLibraryButton]];
     return overlay;
 }
 
@@ -125,34 +124,6 @@
    } else {
       self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
    }
-}
-
-- (UIButton *) photoLibraryButton
-{
-   CGRect fullScreen = self.view.bounds;
-   float screenHeight = CGRectGetMaxY(fullScreen);
-   float buttonWidth = 44;
-   float buttonHeight = 60;
-   UIButton* _photoLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-   /*   [_photoLibraryButton setBackgroundColor:RGBColor(0xffffff, .1)];*/
-   [_photoLibraryButton.layer setCornerRadius:4];
-   [_photoLibraryButton.layer setBorderWidth:1];
-   /*[_photoLibraryButton.layer setBorderColor:RGBColor(0xffffff, .3).CGColor];*/
-   [_photoLibraryButton setFrame:(CGRect){ 0, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
-   [_photoLibraryButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
-   [_photoLibraryButton addTarget:self action:@selector(libraryAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    return _photoLibraryButton;
-}
-
-- (void) libraryAction:(UIButton *)button
-{
-   [self openLibrary];
-}
-
-- (void) openLibrary
-{
-   NSLog(@"Opening photo library");
 }
 
 - (UIButton *) triggerButton
