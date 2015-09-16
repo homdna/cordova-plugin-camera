@@ -15,6 +15,7 @@
 */
 + (instancetype) createFromPictureOptions:(CDVPictureOptions*)options;
 + (instancetype) createFromPictureOptions:(CDVPictureOptions*)pictureOptions refToPlugin:(CDVCamera*)pluginRef;
+- (void) openLibrary;
 @property (strong) CDVCamera* plugin;
 
 @end
