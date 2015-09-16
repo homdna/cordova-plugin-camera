@@ -73,7 +73,6 @@
     UIView *overlay = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     overlay.backgroundColor = [UIColor clearColor];
     overlay.clipsToBounds = NO;
-    [overlay addSubview: [self cameraControlBar]];
     [overlay addSubview: [self triggerButton]];
     [overlay addSubview: [self closeButton]];
     [overlay addSubview: [self toggleCameraButton]];
@@ -133,7 +132,7 @@
     float buttonWidth = 80;
     float buttonHeight = 80;
     UIButton* _triggerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_triggerButton setBackgroundColor:[UIColor whiteColor]];
+    [_triggerButton setBackgroundColor:[UIColor clearColor]];
     [_triggerButton setFrame:(CGRect){CGRectGetMidX(fullScreen) - buttonWidth / 2, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
     [_triggerButton setImage:[UIImage imageNamed:@"trigger"] forState:UIControlStateNormal];
     [_triggerButton addTarget:self action:@selector(triggerAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -175,7 +174,7 @@
     [_closeButton setBackgroundColor:[UIColor clearColor]];
     [_closeButton setFrame:(CGRect){ screenWidth - buttonWidth, screenHeight - buttonHeight, buttonWidth, buttonHeight }];
     [_closeButton setTitle: @"Done" forState: UIControlStateNormal];
-    [_closeButton setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
+    [_closeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
     return _closeButton;
 }
@@ -183,16 +182,6 @@
 - (IBAction) closeAction:(id)sender {
     // Call Take Picture
     [self.plugin imagePickerControllerDidCancel:self];
-}
-
-- (UIView*) cameraControlBar {
-    CGRect fullScreen = self.view.bounds;
-    float screenHeight = CGRectGetMaxY(fullScreen);
-    float screenWidth = CGRectGetMaxX(fullScreen);
-    float barWidth = 80;
-    UIView* controlBarView = [[UIView alloc] initWithFrame:(CGRect){0, screenHeight - barWidth, screenWidth, barWidth}];
-    [controlBarView setBackgroundColor:[UIColor whiteColor]];
-    return controlBarView;
 }
 
 - (void)viewDidLoad {
