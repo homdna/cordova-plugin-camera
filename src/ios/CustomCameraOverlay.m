@@ -41,17 +41,33 @@
     
     newOverlay.showsCameraControls = NO;
     newOverlay.cameraOverlayView = [newOverlay getOverlayView];
-    
+    newOverlay.cameraViewTransform = [newOverlay makeCameraViewTransform];
+
     return newOverlay;
 }
 
 + (instancetype) createFromPictureOptions:(CDVPictureOptions*)pictureOptions refToPlugin:(CDVCamera*)pluginRef {
-    
     CustomCameraOverlay* newOverlay = [CustomCameraOverlay createFromPictureOptions:pictureOptions];
     newOverlay.plugin = pluginRef;
     return newOverlay;
 }
 
+- (CGAffineTransform) makeCameraViewTransform {
+    // Calculate the amount to translate in the y-direction
+    CGFloat yDelta = 50;
+    CGFloat xDelta = 0;
+    
+    CGAffineTransform positionTransform = CGAffineTransformMakeTranslation(xDelta, yDelta);
+    CGAffineTransform mirrorTransform;
+    
+    if (self.cameraDevice == UIImagePickerControllerCameraDeviceRear) {
+        mirrorTransform = CGAffineTransformIdentity;
+    } else {
+        mirrorTransform = CGAffineTransformMakeScale(-1.0,1.0);
+    }
+    return CGAffineTransformConcat(positionTransform, mirrorTransform);
+    return positionTransform;
+}
 
 - (UIView*) getOverlayView {
     UIView *overlay = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -84,11 +100,10 @@
 - (IBAction) toggleCameraAction:(id)sender {
     if (self.cameraDevice == UIImagePickerControllerCameraDeviceRear) {
         self.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        self.cameraViewTransform = CGAffineTransformMakeScale(-1.0,1.0);
     } else {
         self.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-        self.cameraViewTransform = CGAffineTransformIdentity;
     }
+    self.cameraViewTransform = [self makeCameraViewTransform];
 }
 
 - (UIButton *) flashButton
