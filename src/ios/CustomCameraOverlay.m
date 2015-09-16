@@ -135,6 +135,11 @@
    [self openLibrary];
 }
 
+- (void) openLibrary
+{
+   NSLog(@"Opening photo library");
+}
+
 - (UIButton *) triggerButton
 {
     CGRect fullScreen = self.view.bounds;
