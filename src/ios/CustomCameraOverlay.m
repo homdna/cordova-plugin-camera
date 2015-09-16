@@ -113,16 +113,34 @@
     [_flashButton setFrame:(CGRect){ 0, 0, buttonWidth, buttonHeight }];
     [_flashButton setImage:[UIImage imageNamed:@"flash"] forState:UIControlStateNormal];
     [_flashButton addTarget:self action:@selector(flashAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [_flashButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self setProperLabelForFlashButton:_flashButton];
     return _flashButton;
 }
 
+// Sets the flash button label based on camera's current flash mode
+- (void) setProperLabelForFlashButton:(UIButton*)_flashButton {
+    if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeOn) {
+        [_flashButton setTitle:@"On" forState:UIControlStateNormal];
+    } else if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeOff) {
+        [_flashButton setTitle:@"Off" forState:UIControlStateNormal];
+    } else {
+        [_flashButton setTitle:@"Auto" forState:UIControlStateNormal];
+    }
+}
+
 - (IBAction) flashAction:(id)sender {
-   if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeOff) {
-      self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOn;
-   } else {
-      self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
-   }
+    // Toggling the flash mode across three states:
+    // auto -> on -> off
+    UIButton* _flashButton = (UIButton*)sender;
+    if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeAuto) {
+        self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOn;
+    } else if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeOn) {
+        self.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+    } else if (self.cameraFlashMode == UIImagePickerControllerCameraFlashModeOff) {
+        self.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
+    }
+    [self setProperLabelForFlashButton:_flashButton];
 }
 
 - (UIButton *) triggerButton
