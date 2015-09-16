@@ -75,7 +75,7 @@ typedef NSUInteger CDVMediaType;
 @property (strong) UIView* webView;
 
 + (instancetype) createFromPictureOptions:(CDVPictureOptions*)options;
-
+- (void) didFinishTakingPhoto;
 @end
 
 // ======================================================================= //

@@ -579,6 +579,7 @@ static NSString* toBase64(NSData* data) {
         cameraPicker.pickerPopoverController = nil;
         invoke();
     } else {
+        [cameraPicker didFinishTakingPhoto];
         if (!self.inMultiplePicturesMode) {
             [[cameraPicker presentingViewController] dismissViewControllerAnimated:YES completion:invoke];
         } else {
@@ -812,6 +813,12 @@ static NSString* toBase64(NSData* data) {
     }
     
     return cameraPicker;
+}
+
+- (void) didFinishTakingPhoto
+{
+    // Do nothing by default.
+    // This is expected to be called at the end of didFinishPickingMediaWithInfo
 }
 
 @end
