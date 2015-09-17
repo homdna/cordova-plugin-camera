@@ -13,6 +13,8 @@
 
 @implementation CustomCameraOverlay
 
+static UIButton* triggerButtonRef;
+
 @synthesize plugin;
 
 // Entry point method
@@ -73,7 +75,8 @@
     UIView *overlay = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     overlay.backgroundColor = [UIColor clearColor];
     overlay.clipsToBounds = NO;
-    [overlay addSubview: [self triggerButton]];
+    triggerButtonRef = [self triggerButton];
+    [overlay addSubview: triggerButtonRef];
     [overlay addSubview: [self closeButton]];
     [overlay addSubview: [self toggleCameraButton]];
     [overlay addSubview: [self flashButton]];
@@ -159,6 +162,7 @@
 }
 
 - (IBAction) triggerAction:(id)sender {
+	triggerButtonRef.enabled = NO;
     [self takePicture];
 }
 
@@ -201,6 +205,10 @@
 }
 
 - (void)didFinishTakingPhoto {
+    // Enable the trigger button after photo is done
+    triggerButtonRef.enabled = YES;
+    
+    // Show off a white flashing animation as visual feedback for the user
     UIView* whiteFlashScreen = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [whiteFlashScreen setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:whiteFlashScreen];
