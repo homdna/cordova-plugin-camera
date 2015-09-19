@@ -34,16 +34,16 @@ static UIButton* triggerButtonRef;
         // We can only set the camera device if we're actually using the camera.
         newOverlay.cameraDevice = pictureOptions.cameraDirection;
         
+        newOverlay.showsCameraControls = NO;
+        newOverlay.cameraOverlayView = [newOverlay getOverlayView];
+        newOverlay.cameraViewTransform = [newOverlay makeCameraViewTransform];
+        
     } else if (pictureOptions.mediaType == MediaTypeAll) {
         newOverlay.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:newOverlay.sourceType];
     } else {
         NSArray* mediaArray = @[(NSString*)(pictureOptions.mediaType == MediaTypeVideo ? kUTTypeMovie : kUTTypeImage)];
         newOverlay.mediaTypes = mediaArray;
     }
-    
-    newOverlay.showsCameraControls = NO;
-    newOverlay.cameraOverlayView = [newOverlay getOverlayView];
-    newOverlay.cameraViewTransform = [newOverlay makeCameraViewTransform];
 
     return newOverlay;
 }
